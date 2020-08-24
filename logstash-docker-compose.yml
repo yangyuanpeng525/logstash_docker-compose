@@ -1,0 +1,19 @@
+version : '3.7'
+networks:
+  hy-net:
+    external: true
+services:
+  logstash:
+        container_name : logstash
+        hostname: logstash
+        networks:
+          hy-net:
+        image: registry.cn-hangzhou.aliyuncs.com/trsrd/logstash:5.5.0-hy
+        restart: on-failure
+        environment:
+          TZ: Asia/Shanghai
+        volumes:
+           - /TRS/HyCloud/IIP/logs:/TRS/HyCloud/IIP/logs
+           - /TRS/APP/logstash/conf.d/logstash.conf:/TRS/APP/logstash/conf.d/logstash.conf   #logstash配置文件
+        ports :
+                - 9600:9600
